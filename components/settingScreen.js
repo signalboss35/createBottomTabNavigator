@@ -9,19 +9,22 @@ export default class SettingsScreen extends React.Component {
         this.value = this.props.navigation.state.params.value;
     }
 
-    // componentDidMount() {
-    //   console.log('VALUE 1 : ', this.value);
-    // }
+    componentDidMount() {
+      if(this.value){
+        this.setState({count: 2});
+      }
+    }
 
-    componentWillMount() {
-      console.log('VALUE 1 : ', this.value);
+    componentWillUnmount() {
+      console.log('Unmount');
     }
 
     render() {
-      console.log('VALUE : ', this.value);
+      const {count} = this.state;
+      console.log('render : ', count);
       return (
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <Text>Settings!</Text>
+          {count == 1 ? (<Text>{count}</Text>) : (<Text>{count}</Text>)}  
         </View>
       );
     }
