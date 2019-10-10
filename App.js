@@ -3,7 +3,7 @@ import {
   View,
   Text,
 } from 'react-native';
-import { createAppContainer, createSwitchNavigator } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator, StackActions, NavigationActions } from 'react-navigation';
 import { createBottomTabNavigator } from 'react-navigation-tabs';
 import { createStackNavigator, HeaderBackButton } from 'react-navigation-stack';
 import HomeScreen from './components/homeScreen';
@@ -21,48 +21,49 @@ const HomeStack = createStackNavigator(
         backgroundColor: '#0091EA',
       },
       headerTintColor: '#fff',
-      title: 'Home Tab',
-     
+      title: 'Home',
+
     },
   }
 );
-// const HomeStack = createStackNavigator({
-//   Home: {
-//     screen: HomeScreen,
-//     navigationOptions: navigation => {
-//       return {
-//         title: 'HOME',
-//         headerTintColor: '#fff',
-//         headerStyle: {
-//           backgroundColor: '#0091EA',
-//         },
-//       };
-//     },
-//   }
-// });
 
 const SettingStack = createStackNavigator({
-  Home: {
+  Setting: {
     screen: SettingsScreen,
-    params:{value: true},
+    params: { value: true },
+    // navigationOptions: navigation => {
+    //   if(navigation.navigation.state.routeName === "Setting"){
+    //     console.log('on view setting screen');
+    //   }
+    //   return {
+    //     title: 'Setting',
+    //     headerTintColor: '#fff',
+    //     headerStyle: {
+    //       backgroundColor: '#0091EA',
+    //     },
+    //   };
+    // },
     navigationOptions: navigation => {
+      if(navigation.navigation.state.routeName === "Setting"){
+      }
       return {
-        title: 'SETTING',
+        title: 'Setting',
         headerTintColor: '#fff',
         headerStyle: {
           backgroundColor: '#0091EA',
         },
       };
     },
+
   }
 });
 
 const ProfileStack = createStackNavigator({
-  Home: {
+  Profile: {
     screen: profileScreen,
     navigationOptions: navigation => {
       return {
-        title: 'PROFILE',
+        title: 'Profile',
         headerTintColor: '#fff',
         headerStyle: {
           backgroundColor: '#0091EA',
@@ -73,60 +74,60 @@ const ProfileStack = createStackNavigator({
 });
 
 const App = createBottomTabNavigator(
-{
-  Home: {
-    screen: HomeStack,
-    navigationOptions: {
-      tabBarLabel: <Text style={{ fontSize: 15 }}>HOME</Text>,
-    }
-  },
-  Setting: {
-    screen: SettingStack,
-    navigationOptions: {
-      tabBarLabel: <Text style={{ fontSize: 15 }}>SETTING</Text>,
-    }
-  },
-  Profile: {
-    screen: ProfileStack,
-    navigationOptions: {
-      tabBarLabel: <Text style={{ fontSize: 15 }}>PROFILE</Text>,
-    }
-  },
-},
-{
-  tabBarComponent: props => <TabBar {...props} />,
-  tabBarOptions: {
-    tabFeatured: 'Insert',
-    backgroundFeaturedIcon: '#FFF',
-    activeFeaturedTintColor: '#FFF',
-    inactiveFeatureTintColor: '#E1E3DB',
-    showLabel: true,
-    backgroundColor: 'yellow',
-    activeTintColor: '#42619b',
-    inactiveTintColor: '#E1E3DB',
-    style: {
-      ...Platform.select({
-        ios: {
-          ...ifIphoneX(
-            {
-              height: 105,
-            },
-            {
-              height: 65,
-            },
-          ),
-        },
-        android: {
-          height: 50,
-        },
-      }),
-      backgroundColor: '#FFFFFF',
-      borderTopWidth: 1,
-      borderTopColor: '#F2F3EF',
+  {
+    Home: {
+      screen: HomeStack,
+      navigationOptions: {
+        tabBarLabel: <Text style={{ fontSize: 15 }}>HOME</Text>,
+      }
     },
-    tabStyle: {},
+    Setting: {
+      screen: SettingStack,
+      navigationOptions: {
+        tabBarLabel: <Text style={{ fontSize: 15 }}>SETTING</Text>,
+      }
+    },
+    Profile: {
+      screen: ProfileStack,
+      navigationOptions: {
+        tabBarLabel: <Text style={{ fontSize: 15 }}>PROFILE</Text>,
+      }
+    },
+  },
+  {
+    tabBarComponent: props => <TabBar {...props} />,
+    tabBarOptions: {
+      tabFeatured: 'Insert',
+      backgroundFeaturedIcon: '#FFF',
+      activeFeaturedTintColor: '#FFF',
+      inactiveFeatureTintColor: '#E1E3DB',
+      showLabel: true,
+      backgroundColor: 'yellow',
+      activeTintColor: '#42619b',
+      inactiveTintColor: '#E1E3DB',
+      style: {
+        ...Platform.select({
+          ios: {
+            ...ifIphoneX(
+              {
+                height: 105,
+              },
+              {
+                height: 65,
+              },
+            ),
+          },
+          android: {
+            height: 50,
+          },
+        }),
+        backgroundColor: '#FFFFFF',
+        borderTopWidth: 1,
+        borderTopColor: '#F2F3EF',
+      },
+      tabStyle: {},
+    }
   }
-}
 );
 
 

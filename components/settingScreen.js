@@ -1,31 +1,39 @@
 import React from 'react';
-import {View, Text, ToastAndroid} from 'react-native';
+import { View, Text, ToastAndroid } from 'react-native';
 export default class SettingsScreen extends React.Component {
   value = null
-    constructor(props) {
-        super(props);
-        this.state = {count: 1};
-        ToastAndroid.show('constructor SettingsScreen!', ToastAndroid.SHORT);
-        this.value = this.props.navigation.state.params.value;
-    }
+  constructor(props) {
+    super(props);
+    this.state = { count: 1 };
+    this.value = this.props.navigation.state.params.value;
+  }
 
-    componentDidMount() {
-      if(this.value){
-        this.setState({count: 2});
-      }
-    }
+  componentDidMount() {
+    this.didFocusListener = this.props.navigation.addListener(
+      'didFocus',
+      () => {
+        console.log('did focus')
+        ToastAndroid.show('componentDidMount SettingsScreen!', ToastAndroid.SHORT);
+        if (this.value) {
+          this.setState({ count: 2 });
+        }
+      },
+    );
+  }
 
-    componentWillUnmount() {
-      console.log('Unmount');
-    }
+  componentWillUnmount() {
+    this.didFocusListener.remove();
+    this.setState({ count: 1 });
+    console.log('Unmount');
+  }
 
-    render() {
-      const {count} = this.state;
-      console.log('render : ', count);
-      return (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          {count == 1 ? (<Text>{count}</Text>) : (<Text>{count}</Text>)}  
-        </View>
-      );
-    }
+  render() {
+    const { count } = this.state;
+    console.log('render : ', count);
+    return (
+      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+        <Text>{count}</Text>
+      </View>
+    );
+  }
 }
